@@ -1,0 +1,271 @@
+﻿@{
+    ViewData["Title"] = "租借場地";
+}
+
+@*設施背景圖片*@
+<div id="FacilityIdImgContainer"></div>
+
+@*整個卡片區塊*@
+<div class="card mx-auto mycard custom-rounded shadow-lg" style="max-width: 1400px;">
+    <div class="card-body p-3 ">
+        @*設施背景資訊*@
+        <div id="FacilityIdContainer"></div>
+        @*錨點*@
+        <div class="col-lg-12 p-4 sticky-top" style="background: #FFFFFF;">
+            <ul class="nav nav-tabs" id="facilityTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" href="#facility-info">場地信息</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" href="#booking-info">場地預定</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" href="#pricing-info">收費方式</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" href="#photo-gallery">圖片集</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            @*場地信息*@
+            <div id="facility-info" class="container tab-pane active"></div>
+            <div class="container">
+                <div class="d-flex justify-content-lg-start">
+                    <h2 style="color:#00CACA">場地信息</h2>
+                </div><br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="d-flex justify-content-lg-end">
+                            <h5 style="color:#00CACA">場地面積</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex">
+                            <div id="Sitearea"></div>
+                        </div>   
+                    </div><br><br>
+
+                    <div class="col-lg-2">
+                        <div class="d-flex justify-content-lg-end">
+                            <h5 style="color:#00CACA">可容納人數</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex">
+                            <h5>520 人</h5>
+                        </div>
+                    </div><br><br>
+
+                    <div class="col-lg-2">
+                        <div class="d-flex justify-content-lg-end">
+                            <h5 style="color:#00CACA">開放時間</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex">
+                            <h5>除休館不開放，或特殊調整開放時間公告外，其餘時間皆如以下時段星期一至星期日︰早上 8:00 至 晚上 10:00</h5>
+                        </div>
+                    </div><br><br>
+
+                    <div class="col-lg-2">
+                        <div class="d-flex justify-content-lg-end">
+                            <h5 style="color:#00CACA">休館日</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex">
+                            <h5>
+                                1.國定假日（除勞動節外）、春節(除夕至正月初四)及行政院人事行政總處發布之國定假日補假日為休館日，當天不開放。
+                                2.如遇年度歲修及不可抗拒之因素足以影響使用者安全時等事宜，得暫停開放。
+                                3.經本校核准之大型活動，依核可時間使用，不受開放時間之限制。
+                            </h5>
+                        </div>
+                    </div><br><br>
+
+                </div>
+                <hr />
+            </div>
+            
+            @*場地預定*@
+            <div id="booking-info" class="container tab-pane active"></div>
+            <div class="container mt-4">
+                <div class="d-flex justify-content-lg-start">
+                    <h2 style="color:#00CACA">場地預定</h2>
+                </div>
+                <div class="row">
+                    @*互動式預定表*@
+                    <div class="col-lg-8 p-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Generate time slots here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="container">
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <div class="d-flex align-items-center">
+                                        <!-- 格子1 -->
+                                        <div class="d-flex align-items-center me-2">
+                                            <div class="color-box bg-danger" style="width: 30px; height: 30px;"></div>
+                                            <span class="ms-2">不可租借</span>
+                                        </div>
+                                        <div class="d-flex align-items-center me-2">
+                                            <div class="color-box bg-success" style="width: 30px; height: 30px;"></div>
+                                            <span class="ms-2">您的租借</span>
+                                        </div>
+                                        <div class="d-flex align-items-center me-2">
+                                            <div class="color-box bg-secondary" style="width: 30px; height: 30px;"></div>
+                                            <span class="ms-2">可租借</span>
+                                        </div>
+                                        <div class="ms-auto d-flex align-items-center">
+                                            <button id="prevWeek" class="btn btn-secondary me-2">
+                                                <i class="fas fa-arrow-left"></i>
+                                            </button>
+                                            <button id="nextWeek" class="btn btn-secondary">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    @*使用者預定表*@
+                    <div class="col-lg-4 p-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="mt-0">我的租借</h2>
+                            </div>
+                            <div class="card-body">
+                                <div id="userRent">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">地點</th>
+                                            <th scope="col">時間</th>
+                                            <th scope="col">是否過期</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @*add pagination*@
+                                    </tbody>
+
+                                </table>
+                                    <nav aria-label="分页导航示例">
+                                        <ul class="pagination" id="pagination">
+                                            <!-- 分页链接将在这里动态添加 -->
+                                        </ul>
+                                    </nav>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr />
+            </div>
+
+            @*收費方式*@
+            <div id="pricing-info" class="container tab-pane active"></div>
+            <div class="container">
+                <div class="d-flex justify-content-lg-start">
+                    <h2 style="color:#00CACA">收費方式</h2>
+                </div><br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="d-flex justify-content-lg-end">
+                            <h5 style="color:#00CACA">離峰時段</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex">
+                            <h5>週一至週五 08:00 ~ 17:00</h5>
+                        </div>
+                    </div><br><br>
+
+                    <div class="col-lg-2">
+                        <div class="d-flex justify-content-lg-end">
+                            <h5 style="color:#00CACA">尖峰時段</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex">
+                            <h5>週一至週五 17:00 ~ 22:00 及 週六 09:00 ~ 2200 及 週日 09:00 ~ 18:00</h5>
+                        </div>
+                    </div><br><br>
+
+                    <div class="col-lg-2">
+                        <div class="d-flex justify-content-lg-end">
+                            <h5 style="color:#00CACA">收費方式</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex">
+                            <div class="container">
+                                <table class="table table-custom-1 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">身份</th>
+                                            <th scope="col">學生</th>
+                                            <th scope="col">教職</th>
+                                            <th scope="col">眷屬校友</th>
+                                            <th scope="col">校外人士</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">離峰時段</th>
+                                            <td>$40</td>
+                                            <td>$60</td>
+                                            <td>$80</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">尖峰時段</th>
+                                            <td>$50</td>
+                                            <td>$70</td>
+                                            <td>$80</td>
+                                            <td>$100</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-muted">注意：計算價格時，依照身份的不同有著價格的不同。</p>
+                            </div>
+                        </div><br><br>
+                    </div><br />
+                </div>
+                <hr />
+            </div>
+
+            @*場地圖片集*@
+            <div id="photo-gallery" class="container tab-pane active"></div>
+            <div class="container">
+                <div class="d-flex justify-content-lg-start">
+                    <h2 style="color:#00CACA">圖片集</h2>
+                </div><br>
+                <div id="Siteimg"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/rentDetail.js" asp-append-version="true"></script>

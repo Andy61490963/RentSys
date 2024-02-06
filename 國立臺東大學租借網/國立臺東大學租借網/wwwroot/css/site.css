@@ -1,0 +1,84 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.table th,
+.table td {
+    border: 2px solid #dbdbdb;
+    padding: 5px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #ffffff;
+}
+
+.bg-image {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.color-square {
+    width: 10%; 
+    height: 10%;
+    background-color: #3498db; 
+}
+
+.my-col {
+    background-color: black;
+}
+
+.mycard {
+    margin-top: -10% !important;
+}
+
+.custom-rounded {
+    border-radius: 1rem !important; 
+}
+
+.nav-tabs .nav-item .nav-link {
+    color: black;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    color: #00CACA;
+}
+
+.table-custom-1 {
+    width: 90%;
+}

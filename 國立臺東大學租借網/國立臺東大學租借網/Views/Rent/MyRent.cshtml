@@ -1,0 +1,173 @@
+﻿@{
+    ViewData["Title"] = "租借場地";
+}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        
+    </style>
+<div id="Container" class="row">
+    <div class="col-lg-2">
+    </div>
+    <div class="table-container col-lg-8 p-5">
+        <h2>租借时段表</h2>
+        <button id="prevWeek">上一星期</button>
+        <button id="nextWeek">下一星期</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Generate time slots here -->
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+    <script>
+        const timeSlots = [
+            "8:00", "9:00", "10:00", "11:00", "12:00",
+            "1:00", "2:00", "3:00", "4:00", "5:00",
+            "6:00", "7:00", "8:00"
+        ];
+
+
+
+        let currentWeekIndex = 0;
+        const selectedSlots = [];
+
+        function createTable() {
+            const tableBody = document.querySelector(".table tbody");
+            tableBody.innerHTML = "";
+
+            for (let i = 0; i < timeSlots.length; i++) {
+                const row = document.createElement("tr");
+                const timeCell = document.createElement("td");
+                timeCell.textContent = timeSlots[i];
+                row.appendChild(timeCell);
+
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement("td");
+                    cell.classList.add("available");
+                    cell.classList.add("bg-light"); 
+                    cell.dataset.dateIndex = j;
+                    cell.dataset.timeIndex = i;
+                    cell.addEventListener("click", toggleSlot);
+                    row.appendChild(cell);
+                }
+
+                tableBody.appendChild(row);
+            }
+
+            // 设置初始背景色
+            updateCellBackground();
+        }
+
+        function updateWeek() {
+            const daysOfWeek = ["日", "一", "二", "三", "四", "五", "六"];
+            const tableHeaders = document.querySelectorAll(".table th");
+            const currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() + currentWeekIndex * 7);
+
+            for (let i = 0; i < 7; i++) {
+                const headerDate = new Date(currentDate);
+                headerDate.setDate(currentDate.getDate() + i);
+                tableHeaders[i + 1].textContent = `${headerDate.getMonth() + 1}/${headerDate.getDate()}(${daysOfWeek[headerDate.getDay()]})`;
+            }
+        }
+
+        function toggleSlot(event) {
+            const cell = event.target;
+            const dateIndex = cell.dataset.dateIndex;
+            const timeIndex = cell.dataset.timeIndex;
+            const selectedDate = new Date();
+            selectedDate.setDate(selectedDate.getDate() + currentWeekIndex * 7 + parseInt(dateIndex));
+            const selectedTime = timeSlots[timeIndex];
+            const slot = {
+                date: selectedDate.toDateString(),
+                time: selectedTime
+            };
+
+            if (cell.classList.contains("available")) {
+                cell.classList.remove("available");
+                cell.classList.add("selected");
+                selectedSlots.push(slot);
+            } else if (cell.classList.contains("selected")) {
+                cell.classList.remove("selected");
+                cell.classList.add("available");
+                const indexToRemove = selectedSlots.findIndex((selectedSlot) => {
+                    return selectedSlot.date === slot.date && selectedSlot.time === slot.time;
+                });
+                if (indexToRemove !== -1) {
+                    selectedSlots.splice(indexToRemove, 1);
+                }
+            }
+
+            // 更新背景色
+            updateCellBackground();
+            console.log("Selected Slots:", selectedSlots);
+        }
+        
+        function updateCellBackground() {
+            const cells = document.querySelectorAll(".table tbody td");
+            cells.forEach((cell) => {
+                if (cell.classList.contains("selected")) {
+                    cell.classList.remove("bg-light");
+                    cell.classList.add("bg-success");
+                } else if (cell.classList.contains("available")) {
+                    cell.classList.remove("bg-success");
+                    cell.classList.add("bg-light");
+                }
+            });
+        }
+
+        document.getElementById("prevWeek").addEventListener("click", () => {
+            currentWeekIndex--;
+            updateWeek();
+        });
+
+        document.getElementById("nextWeek").addEventListener("click", () => {
+            currentWeekIndex++;
+            updateWeek();
+        });
+
+        createTable();
+        updateWeek();
+    </script>
